@@ -137,6 +137,12 @@ class Ldap2Wrapper
                 $userGroups = $currentResult->getValue('memberof', 'all');
                 $userGroups = array_map('trim', $userGroups);
                 $userGroups = array_map('strtolower', $userGroups);
+                 foreach($userGroups as &$group) {
+                        $groupElements = explode(",", $group);
+                        $cn = str_replace("cn=", "",$groupElements[0]);
+                        $group = $cn;
+                        }
+                unset($group);
             }
 
             Log::Debug('Found user %s', $username);
